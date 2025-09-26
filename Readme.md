@@ -18,25 +18,70 @@ Originally developed for **MVA School**, this tool supports standardized Indian 
 
 ---
 
-## 🔍 Key Features
+## 📄 Excel Sheet Structure (Required Format)
 
-### 📊 **Interactive Dashboard**
-- Subject-wise performance trends
-- Grade distribution (A1, A2, B1, ..., E) with **color-coded pie charts**
-- Correlation heatmap + **plain-language insights** (e.g., "Maths and Science are strongly correlated")
-- Outlier detection via **IQR, Z-score, and Isolation Forest**
-- Student clustering into performance groups (K-Means + Silhouette analysis)
+To ensure smooth parsing, your Excel file **must follow this exact structure**:
 
-### 🤖 **Advanced Analytics**
-- **Linear regression** to predict overall percentage from subject scores
-- **PCA** for dimensionality reduction and pattern visualization
-- **T-test** to statistically compare "New" vs "Old" student cohorts
-- Automatic detection of data duplicates using **MD5 hashing**
+### ✅ Header Row (Row with column names):
+| Sr.No. | Roll No. | Name | English_Theory | English_Practical | English_Total | Hindi_Theory | Hindi_Practical | Hindi_Total | Maths_Theory | Maths_Practical | Maths_Total | Science_Theory | Science_Practical | Science_Total | Social_Science_Theory | Social_Science_Practical | Social_Science_Total | AI_Theory | AI_Practical | AI_Total | Grand_Total | Percentage | New/Old |
+|--------|----------|------|----------------|-------------------|---------------|--------------|-----------------|-------------|--------------|-----------------|-------------|----------------|-------------------|-------------|-----------------------|--------------------------|----------------------|-----------|--------------|----------|-------------|------------|---------|
 
-### 💾 **Data Management**
-- Parses messy Excel sheets with flexible header detection
-- Saves all results to **MySQL** (students, models, analysis runs)
-- Reusable: Load past analyses without reprocessing
+> 💡 **Note**:  
+> - The header row can appear anywhere — the script auto-detects it by looking for `"Sr.No."`, `"Roll No."`, `"Name"` in columns 0, 1, 2.
+> - “New/Old” is optional — if present, it must be in **column 23 or later** (after Percentage), and values must be `"NEW"` or `"OLD"` (case-insensitive).
+> - All subject columns must use the suffix `_Total` (e.g., `English_Total`, `Maths_Total`) for automatic detection.
+
+### ✅ Data Rows:
+- Each row = one student
+- Columns 0–2: Sr.No., Roll_No., Name (required)
+- Columns 3–22: Subject scores (Theory + Practical → Total)
+- Column 23+: Optional “New/Old” field
+- Empty rows or rows with <5 filled cells are ignored
+
+📌 **Sample File**: See [`sample_data/sample_10th_marksheet.xlsx`](sample_data/sample_10th_marksheet.xlsx)
+
+---
+
+## 🖼️ Screenshots
+
+Here’s what the dashboard looks like:
+
+### 📊 Overview & Subject Performance
+![Overview Dashboard](assets/screenshot_overview.png)
+
+> *View total students, average scores, and grade distribution per subject.*
+
+---
+
+### 🔗 Correlation Insights
+![Correlation Matrix](assets/screenshot_correlation.png)
+![Correlation Matrix](assets/screenshot_correlation1.png)
+
+> *Interactive heatmap + plain-language interpretation of strong correlations.*
+
+---
+
+### 🧩 Clustering Results
+![Clustering Profiles](assets/screenshot_clustering.png)
+![Clustering Profiles](assets/screenshot_clustering1.png)
+
+> *Students grouped into performance clusters with visual comparison of subject-wise averages.*
+
+---
+
+### ⚠️ Outlier Detection
+![Outliers Tab](assets/screenshot_outliers.png)
+
+> *Identify underperformers or top scorers using IQR, Z-score, and Isolation Forest.*
+
+---
+
+> 💡 **How to add screenshots?**  
+> 1. Save your dashboard screenshots as `.png` files  
+> 2. Place them in an `assets/` folder in your repo  
+> 3. Update image paths above accordingly
+
+*(You can generate these screenshots by running the app locally and taking captures!)*
 
 ---
 
@@ -58,6 +103,7 @@ MVA_Dashboard/
 ├── app.py                  # Streamlit entry point
 ├── data_processor_10th.py  # Core logic: parsing, analysis, dashboard
 ├── sample_data/            # Example marksheet (Excel)
+├── assets/                 # Screenshots (optional)
 └── requirements.txt        # Dependencies
 ```
 
@@ -81,7 +127,7 @@ MVA_Dashboard/
 
 4. **Upload** your 10th-grade Excel marksheet and explore!
 
-> 💡 No Excel file? Use the included `sample_10th_marksheet.xlsx` to test.
+> 💡 No Excel file? Use the included `sample_data/sample_10th_marksheet.xlsx` to test.
 
 ---
 
@@ -124,8 +170,5 @@ Inspired by the need for **data-driven decision-making in Indian schools**.
 
 ---
 
-### ✅ Ready to deploy in your school?  
+✅ **Ready to deploy in your school?**  
 Just upload the marksheet — the rest is automated.
-
----
-
