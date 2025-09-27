@@ -308,7 +308,7 @@ def render_full_dashboard(df_parsed, analysis_results, trained_models=None):
     st.header("📊 Overview")
     st.write(f"**Total Students:** {len(df_parsed)}")
     st.write(f"**Analysis Date:** {analysis_results.get('analysis_date', 'N/A')}")
-    st.dataframe(df_parsed.head(10))
+    st.dataframe(df_parsed)
 
     # --- Subject Performance ---
     st.markdown("---")
