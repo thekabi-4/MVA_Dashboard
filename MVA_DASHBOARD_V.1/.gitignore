@@ -1,0 +1,19 @@
+#Virtual environment
+/venv/
+.env
+
+#PyCharm-specific files
+.idea/
+
+#Python compiled files
+pycache/
+*.pyc
+*.pyd
+*.pyo
+
+#Temporary files
+temp.py
+
+#Data and results directories
+/excels/
+/analysis_results/
