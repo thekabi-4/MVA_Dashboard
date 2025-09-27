@@ -10,7 +10,7 @@ load_dotenv()
 st.set_page_config(page_title="MVA Results Dashboard", layout="wide")
 
 def check_password():
-    expected_password = os.getenv("ADMIN_PASSWORD") or expected_password == "admin123"
+    expected_password = os.getenv("ADMIN_PASSWORD") or "default_pass"
     if not expected_password:
         st.error("Admin password not configured.")
         return False
